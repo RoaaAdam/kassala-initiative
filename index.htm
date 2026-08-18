@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> التسجيل - تيم إعلام مبادرة كسلا تقرا</title>
+    <title>فورم التسجيل - تيم إعلام مبادرة كسلا تقرأ</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,17 +16,18 @@
                      onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:40px;\'>🎨</span>';" />
             </div>
             <div class="header-text">
-                <h1>📋 التسجيل في تيم اﻹعلام</h1>
-                <p class="subtitle">مبادرة كسلا تقرا</p>
+                <h1>التسجيل في تيم الإعلام</h1>
+                <p class="subtitle">مبادرة كسلا تقرأ</p>
             </div>
         </div>
 
-        <!-- 1 2 3 4 -->
+        <!-- أرقام الخطوات 1 2 3 4 5 -->
         <div class="step-indicator">
             <span class="step active" data-step="0">1</span>
             <span class="step" data-step="1">2</span>
             <span class="step" data-step="2">3</span>
             <span class="step" data-step="3">4</span>
+            <span class="step" data-step="4">5</span>
         </div>
 
         <form id="multiStepForm" novalidate>
@@ -34,23 +35,35 @@
             <div class="step-page active" data-step="0">
                 <h2>📝 البيانات الشخصية</h2>
                 
-                <label>الاسم الرباعي *</label>
-                <input type="text" name="fullName" required />
+                <div class="field-group">
+                    <label>الاسم الرباعي *</label>
+                    <input type="text" name="fullName" required />
+                </div>
 
-                <label>العمر *</label>
-                <input type="number" name="age"  required min="10" max="60" />
+                <div class="field-group">
+                    <label>العمر *</label>
+                    <input type="number" name="age" required min="10" max="60" />
+                </div>
 
-                <label>رقم واتساب *</label>
-                <input type= "tel" name="whatsapp"  required />
+                <div class="field-group">
+                    <label>رقم واتساب *</label>
+                    <input type="tel" name="whatsapp" placeholder="مثال: 0912345678" required />
+                </div>
 
-                <label>رقم الهاتف (اختياري)</label>
-                <input type="tel" name="phone" />
+                <div class="field-group">
+                    <label>رقم الهاتف (اختياري)</label>
+                    <input type="tel" name="phone" placeholder="اختياري" />
+                </div>
 
-                <label>معرف تليجرام (اختياري)</label>
-                <input type="text" name="telegram" placeholder="@username" />
+                <div class="field-group">
+                    <label>معرف تليجرام (اختياري)</label>
+                    <input type="text" name="telegram" placeholder="@username" />
+                </div>
 
-                <label>التخصص الجامعي/ المهنة *</label>
-                <input type="text" name="profession" required />
+                <div class="field-group">
+                    <label>التخصص الجامعي / المهنة *</label>
+                    <input type="text" name="profession" required />
+                </div>
 
                 <button type="button" class="next-btn">التالي ➜</button>
             </div>
@@ -59,31 +72,52 @@
             <div class="step-page" data-step="1">
                 <h2>🎯 المهارات والخبرات</h2>
                 
-                <label>ما هو التطبيق الذي تصمم به؟ *</label>
-                <input type="text" name="designApp" placeholder="مثال: كانفا، فوتوشوب" required />
+                <div class="field-group">
+                    <label>ما هو التطبيق الذي تصمم به؟ *</label>
+                    <input type="text" name="designApp" placeholder="مثال: كانفا، فوتوشوب" required />
+                </div>
 
-                <label>مستوى خبرتك في كانفا *</label>
-                <select name="canvaLevel" required>
-                    <option value="">-- اختر المستوى --</option>
-                    <option value="مبتدئ">مبتدئ (أساسيات + قوالب)</option>
-                    <option value="متوسط">متوسط (تعديل بصورة جيده)</option>
-                    <option value="متوسط">إحترافي (  عمل إحترافي جدا)</option>
-                    <option value="أخرى">أخرى</option>
-                </select>
+                <div class="field-group">
+                    <label>مستوى خبرتك في كانفا *</label>
+                    <select name="canvaLevel" required>
+                        <option value="">-- اختر المستوى --</option>
+                        <option value="مبتدئ">مبتدئ (أساسيات + قوالب)</option>
+                        <option value="متوسط">متوسط (تعديل بصورة جيدة)</option>
+                        <option value="إحترافي">إحترافي (عمل إحترافي جداً)</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                </div>
 
-                <label>نوع حساب كانفا *</label>
-                <select name="canvaAccount" required>
-                    <option value="">-- اختر نوع الحساب --</option>
-                    <option value="مجاني">مجاني</option>
-                    <option value="مدفوع">مدفوع</option>
-                </select>
+                <div class="field-group">
+                    <label>نوع حساب كانفا *</label>
+                    <select name="canvaAccount" required>
+                        <option value="">-- اختر نوع الحساب --</option>
+                        <option value="مجاني">مجاني</option>
+                        <option value="مدفوع">مدفوع</option>
+                    </select>
+                </div>
 
-                <label>هل سبق لك التطوع في تصميم لمبادرات سابقة؟ *</label>
-                <select name="previousVolunteer" required>
-                    <option value="">-- اختر --</option>
-                    <option value="نعم">نعم</option>
-                    <option value="لا">لا</option>
-                </select>
+                <div class="field-group">
+                    <label>هل سبق لك التطوع في تصميم لمبادرات سابقة؟ *</label>
+                    <select name="previousVolunteer" id="previousVolunteerSelect" required>
+                        <option value="">-- اختر --</option>
+                        <option value="نعم">نعم</option>
+                        <option value="لا">لا</option>
+                    </select>
+                </div>
+
+                <!-- حقول تظهر فقط عند اختيار "نعم" -->
+                <div id="volunteerDetails" style="display: none;">
+                    <div class="field-group">
+                        <label>ما اسم المبادرة التي تطوعت بها؟ *</label>
+                        <input type="text" name="volunteerInitiativeName" id="volNameInput" />
+                    </div>
+
+                    <div class="field-group">
+                        <label>ما هي وظيفتك / دورك فيها؟ *</label>
+                        <input type="text" name="volunteerRole" id="volRoleInput" />
+                    </div>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn">➜ السابق</button>
@@ -95,8 +129,11 @@
             <div class="step-page" data-step="2">
                 <h2>🖼️ معرض الأعمال</h2>
                 
-                <label>يرجى وضع رابط معرض أعمالك (Google Drive, Behance, Canva...) *</label>
-<input type="url" name="portfolio" placeholder="https://drive.google.com/..." required /><p class="note">📌 ملاحظة: نماذج الأعمال هي المعيار الأساسي للتقييم</p>
+                <div class="field-group">
+                    <label>يرجى وضع رابط معرض أعمالك (Google Drive, Behance, Canva...) *</label>
+                    <input type="url" name="portfolio" placeholder="https://drive.google.com/..." required />
+                    <p class="note">📌 ملاحظة: نماذج الأعمال هي المعيار الأساسي للتقييم</p>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn">➜ السابق</button>
@@ -108,27 +145,49 @@
             <div class="step-page" data-step="3">
                 <h2>✅ الالتزام والموافقة</h2>
                 
-                <label>هل لديك زمن محدد للعمل؟ إن كان نعم، اذكر الأوقات المناسبة</label>
-                <textarea name="availableTime" rows="3" placeholder="مثال: مساءً بعد الساعة 8، أو في عطلة نهاية الأسبوع..."></textarea>
+                <div class="field-group">
+                    <label>هل لديك زمن محدد للعمل؟ إن كان نعم، اذكر الأوقات المناسبة</label>
+                    <textarea name="availableTime" rows="3" placeholder="مثال: مساءً بعد الساعة 8، أو في عطلة نهاية الأسبوع..."></textarea>
+                </div>
 
-                <label class="checkbox-label">
-                    <input type="checkbox" name="agree" required />
-                    أوافق على أن أكون مشاركاً معكم وعضواً فعالاً *
-                </label>
+                <div class="field-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="agree" required />
+                        أوافق على أن أكون مشاركاً معكم وعضواً فعالاً *
+                    </label>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn">➜ السابق</button>
-                    <button type="submit" class="submit-btn">✅ إرسال</button>
+                    <button type="button" class="next-btn">التالي ➜</button>
+                </div>
+            </div>
+
+            <!-- ===== الخطوة 5: اقتراحات وأفكار ===== -->
+            <div class="step-page" data-step="4">
+                <h2>💡 مشاركة الآراء والاقتراحات</h2>
+                <p class="suggestion-intro">يسعدنا جداً انضمامك إلينا! نؤمن بفعالية الأفكار المبتكرة، هل لديك أي اقتراحات أو أفكار ترى أنها مفيدة لتطوير العمل الإعلامي للمبادرة؟</p>
+
+                <div class="suggestion-options">
+                    <button type="button" class="suggestion-choice-btn" id="btnSuggestionsYes">💡 نعم، لدي اقتراح</button>
+                    <button type="button" class="suggestion-choice-btn secondary" id="btnSuggestionsNo">لا، شكراً</button>
+                </div>
+
+                <div id="suggestionBox" style="display: none; margin-top: 15px;">
+                    <div class="field-group">
+                        <label>اكتب اقتراحك أو فكرتك هنا:</label>
+                        <textarea name="userSuggestions" id="userSuggestionsText" rows="4" placeholder="اكتب أفكارك المقترحة..."></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button type="button" class="prev-btn">➜ السابق</button>
+                    <button type="submit" class="submit-btn">✅ إرسال النهائي</button>
                 </div>
             </div>
         </form>
     </div>
 
-    <!-- ===== جافا سكريبت في آخر الصفحة ===== -->
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-     
