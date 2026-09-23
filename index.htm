@@ -1,192 +1,1115 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>فورم التسجيل - تيم إعلام مبادرة كسلا تقرأ</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استمارة مسح صحي وبيئي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 780px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #00796b, #009688);
+      color: #fff;
+      padding: 30px 30px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* شريط التقدم */
+    .progress-container {
+      padding: 20px 30px 10px;
+      background: #fff;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      right: 10%;
+      left: 10%;
+      height: 3px;
+      background: #e0e0e0;
+      z-index: 0;
+    }
+
+    .progress-bar {
+      position: absolute;
+      top: 18px;
+      right: 10%;
+      height: 3px;
+      background: #009688;
+      z-index: 1;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .step-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+      width: 25%;
+    }
+
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      color: #757575;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .step-circle.active {
+      background: #009688;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    .step-circle.completed {
+      background: #4caf50;
+      color: #fff;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+      color: #757575;
+      margin-top: 6px;
+      text-align: center;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .step-label.active {
+      color: #009688;
+    }
+
+    /* محتوى النموذج */
+    .form-body {
+      padding: 10px 30px 30px;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #00796b;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e0f2f1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-title .icon {
+      font-size: 1.4rem;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #37474f;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .form-group label .required {
+      color: #e53935;
+      margin-right: 4px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="date"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      color: #263238;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #009688;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(0, 150, 136, 0.1);
+    }
+
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+      border-color: #e53935;
+      background: #ffebee;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* أزرار الراديو */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #546e7a;
+    }
+
+    .radio-option:hover {
+      border-color: #80cbc4;
+      background: #e0f2f1;
+    }
+
+    .radio-option input[type="radio"] {
+      accent-color: #009688;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .radio-option.selected {
+      border-color: #009688;
+      background: #e0f2f1;
+      color: #00796b;
+    }
+
+    .radio-option.error {
+      border-color: #e53935;
+      background: #ffebee;
+    }
+
+    /* الحقول الشرطية */
+    .conditional-fields {
+      display: none;
+      padding: 16px;
+      background: #f1f8e9;
+      border-radius: 12px;
+      border-right: 4px solid #8bc34a;
+      margin-top: 10px;
+      animation: slideDown 0.3s ease;
+    }
+
+    .conditional-fields.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .conditional-fields .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    /* أزرار التنقل */
+    .form-navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 30px 30px;
+      border-top: 1px solid #f0f0f0;
+      background: #fff;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-prev {
+      background: #eceff1;
+      color: #546e7a;
+    }
+
+    .btn-prev:hover {
+      background: #cfd8dc;
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #009688, #00796b);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0, 150, 136, 0.3);
+    }
+
+    .btn-next:hover {
+      box-shadow: 0 6px 20px rgba(0, 150, 136, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #4caf50, #388e3c);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn.hidden {
+      display: none;
+    }
+
+    /* تأثير الاهتزاز عند الخطأ */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    .shake {
+      animation: shake 0.5s ease;
+    }
+
+    /* رسالة الخطأ */
+    .error-message {
+      color: #e53935;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* شاشة النجاح */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 30px;
+    }
+
+    .success-screen.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .success-screen h2 {
+      color: #2e7d32;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .success-screen p {
+      color: #546e7a;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .loader {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e0f2f1;
+      border-top: 4px solid #009688;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    .loader.show {
+      display: block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* التجاوب */
+    @media (max-width: 600px) {
+      .container {
+        border-radius: 16px;
+      }
+
+      .header {
+        padding: 20px 16px 14px;
+      }
+
+      .header h1 {
+        font-size: 1.2rem;
+      }
+
+      .header p {
+        font-size: 0.8rem;
+      }
+
+      .progress-container {
+        padding: 14px 16px 8px;
+      }
+
+      .step-label {
+        font-size: 0.65rem;
+      }
+
+      .step-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+      }
+
+      .form-body {
+        padding: 10px 16px 20px;
+      }
+
+      .form-navigation {
+        padding: 16px;
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        min-width: auto;
+      }
+
+      .radio-group {
+        flex-direction: column;
+      }
+
+      .radio-option {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
 
-        <!-- ===== HEADER ===== -->
-        <div class="header-with-logo">
-            <div class="logo-placeholder">
-                <img src="5764617002487058106.jpg" alt="شعار مبادرة كسلا" id="mainLogo"
-                     onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:40px;\'>🎨</span>';" />
-            </div>
-            <div class="header-text">
-                <h1>التسجيل في تيم الإعلام</h1>
-                <p class="subtitle">مبادرة كسلا تقرأ</p>
-            </div>
+<div class="container" id="formContainer">
+  <div class="header">
+    <h1> استمارة المسح الصحي والبيئي</h1>
+   </div>
+
+  <!-- شريط التقدم -->
+  <div class="progress-container">
+    <div class="progress-steps">
+      <div class="progress-bar" id="progressBar"></div>
+      <div class="step-indicator">
+        <div class="step-circle active" data-step="1">1</div>
+        <div class="step-label active" data-step="1">بيانات الأسرة</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-circle" data-step="2">2</div>
+        <div class="step-label" data-step="2">الوضع الصحي</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-circle" data-step="3">3</div>
+        <div class="step-label" data-step="3">البيئة والمياه</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-circle" data-step="4">4</div>
+        <div class="step-label" data-step="4">معلومات إضافية</div>
+      </div>
+    </div>
+  </div>
+
+  <form id="surveyForm" novalidate>
+    <div class="form-body">
+
+      <!-- الخطوة 1: بيانات الأسرة -->
+      <div class="step active" data-step="1">
+        <div class="step-title"><span class="icon">🏠</span> بيانات الأسرة</div>
+
+        <div class="form-group">
+          <label>المنطقة / القرية <span class="required">*</span></label>
+          <input type="text" name="region" id="region" placeholder="مثال: قرية الأمل" required>
+          <div class="error-message" id="regionError">هذا الحقل مطلوب</div>
         </div>
 
-        <!-- أرقام الخطوات 1 2 3 4 5 -->
-        <div class="step-indicator">
-            <span class="step active" data-step="0">1</span>
-            <span class="step" data-step="1">2</span>
-            <span class="step" data-step="2">3</span>
-            <span class="step" data-step="3">4</span>
-            <span class="step" data-step="4">5</span>
+        <div class="form-group">
+          <label>الحي <span class="required">*</span></label>
+          <input type="text" name="neighborhood" id="neighborhood" placeholder="مثال: حي النور" required>
+          <div class="error-message" id="neighborhoodError">هذا الحقل مطلوب</div>
         </div>
 
-        <form id="multiStepForm" novalidate>
-            <!-- ===== الخطوة 1: البيانات الشخصية ===== -->
-            <div class="step-page active" data-step="0">
-                <h2>📝 البيانات الشخصية</h2>
-                
-                <div class="field-group">
-                    <label>الاسم الرباعي *</label>
-                    <input type="text" name="fullName" required />
-                </div>
+        <div class="form-group">
+          <label>عدد أفراد الأسرة <span class="required">*</span></label>
+          <input type="number" name="familyCount" id="familyCount" min="1" max="50" 
+          <div class="error-message" id="familyCountError">يرجى إدخال رقم </div>
+        </div>
 
-                <div class="field-group">
-                    <label>العمر *</label>
-                    <input type="number" name="age" required min="10" max="60" />
-                </div>
+        <div class="form-group">
+          <label>عدد الأطفال <span class="required">*</span></label>
+          <input type="number" name="childrenCount" id="childrenCount" min="0" max="30"  required>
+          <div class="error-message" id="childrenCountError">يرجى إدخال رقم </div>
+        </div>
 
-                <div class="field-group">
-                    <label>رقم واتساب *</label>
-                    <input type="tel" name="whatsapp" required />
-                </div>
+        <div class="form-group">
+          <label>مصدر مياه الشرب <span class="required">*</span></label>
+          <div class="radio-group" id="waterSourceGroup">
+            <label class="radio-option">
+              <input type="radio" name="waterSource" value="شبكة عامة"> شبكة عامة
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterSource" value="بئر خاص"> بئر خاص
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterSource" value="ناقلة مياه"> ناقلة مياه
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterSource" value="مياه معبأة"> مياه معبأة
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterSource" value="أخرى"> أخرى
+            </label>
+          </div>
+          <div class="error-message" id="waterSourceError">يرجى اختيار مصدر المياه</div>
+        </div>
 
-                <div class="field-group">
-                    <label>رقم الهاتف (اختياري)</label>
-                    <input type="tel" name="phone" placeholder="اختياري" />
-                </div>
+        <div class="conditional-fields" id="waterSourceOtherContainer">
+          <div class="form-group">
+            <label>يرجى تحديد المصدر الآخر <span class="required">*</span></label>
+            <input type="text" name="waterSourceOtherText" id="waterSourceOtherText" placeholder="اكتب المصدر هنا">
+            <div class="error-message" id="waterSourceOtherTextError">هذا الحقل مطلوب</div>
+          </div>
+        </div>
+      </div>
 
-                <div class="field-group">
-                    <label>معرف تليجرام (اختياري)</label>
-                    <input type="text" name="telegram" placeholder="@username" />
-                </div>
+      <!-- الخطوة 2: الوضع الصحي -->
+      <div class="step" data-step="2">
+        <div class="step-title"><span class="icon">🩺</span> الوضع الصحي</div>
 
-                <div class="field-group">
-                    <label>التخصص الجامعي / المهنة *</label>
-                    <input type="text" name="profession" required />
-                </div>
+        <div class="form-group">
+          <label>هل يوجد حالات سرطان في الأسرة؟ <span class="required">*</span></label>
+          <div class="radio-group" id="cancerHistoryGroup">
+            <label class="radio-option">
+              <input type="radio" name="cancerHistory" value="نعم"> نعم
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="cancerHistory" value="لا"> لا
+            </label>
+          </div>
+          <div class="error-message" id="cancerHistoryError">يرجى الاختيار</div>
+        </div>
 
-                <button type="button" class="next-btn">التالي ➜</button>
-            </div>
+        <div class="conditional-fields" id="cancerDetailsContainer">
+          <div class="form-group">
+            <label>عدد الحالات <span class="required">*</span></label>
+            <input type="number" name="cancerCasesCount" id="cancerCasesCount" min="1" max="20" placeholder="من 1 إلى 20">
+            <div class="error-message" id="cancerCasesCountError">يرجى إدخال رقم بين 1 و 20</div>
+          </div>
+          <div class="form-group">
+            <label>صلة القرابة <span class="required">*</span></label>
+            <input type="text" name="cancerRelation" id="cancerRelation" placeholder="مثال: أب، أخ، عم">
+            <div class="error-message" id="cancerRelationError">هذا الحقل مطلوب</div>
+          </div>
+          <div class="form-group">
+            <label>نوع السرطان <span class="required">*</span></label>
+            <input type="text" name="cancerType" id="cancerType" placeholder="مثال: سرطان الثدي">
+            <div class="error-message" id="cancerTypeError">هذا الحقل مطلوب</div>
+          </div>
+          <div class="form-group">
+            <label>سنة التشخيص <span class="required">*</span></label>
+            <input type="number" name="cancerDiagnosisYear" id="cancerDiagnosisYear" min="1950" max="2030" placeholder="من 1950 إلى 2030">
+            <div class="error-message" id="cancerDiagnosisYearError">يرجى إدخال سنة بين 1950 و 2030</div>
+          </div>
+        </div>
 
-            <!-- ===== الخطوة 2: المهارات ===== -->
-            <div class="step-page" data-step="1">
-                <h2>🎯 المهارات والخبرات</h2>
-                
-                <div class="field-group">
-                    <label>ما هو التطبيق الذي تصمم به؟ *</label>
-                    <input type="text" name="designApp" placeholder="مثال: كانفا، فوتوشوب" required />
-                </div>
+        <div class="form-group">
+          <label>هل يوجد أمراض متكررة في الأسرة؟ <span class="required">*</span></label>
+          <div class="radio-group" id="otherDiseasesGroup">
+            <label class="radio-option">
+              <input type="radio" name="otherDiseases" value="نعم"> نعم
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="otherDiseases" value="لا"> لا
+            </label>
+          </div>
+          <div class="error-message" id="otherDiseasesError">يرجى الاختيار</div>
+        </div>
 
-                <div class="field-group">
-                    <label>مستوى خبرتك في كانفا *</label>
-                    <select name="canvaLevel" required>
-                        <option value="">-- اختر المستوى --</option>
-                        <option value="مبتدئ">مبتدئ (أساسيات + قوالب)</option>
-                        <option value="متوسط">متوسط (تعديل بصورة جيدة)</option>
-                        <option value="إحترافي">إحترافي (عمل إحترافي جداً)</option>
-                    </select>
-                </div>
+        <div class="conditional-fields" id="diseasesListContainer">
+          <div class="form-group">
+            <label>تفاصيل الأمراض المتكررة <span class="required">*</span></label>
+            <textarea name="diseasesList" id="diseasesList" placeholder="اذكر الأمراض المتكررة في الأسرة..."></textarea>
+            <div class="error-message" id="diseasesListError">هذا الحقل مطلوب</div>
+          </div>
+        </div>
+      </div>
 
-                <div class="field-group">
-                    <label>نوع حساب كانفا *</label>
-                    <select name="canvaAccount" required>
-                        <option value="">-- اختر نوع الحساب --</option>
-                        <option value="مجاني">مجاني</option>
-                        <option value="مدفوع">مدفوع</option>
-                    </select>
-                </div>
+      <!-- الخطوة 3: البيئة ومياه الشرب -->
+      <div class="step" data-step="3">
+        <div class="step-title"><span class="icon">🌍</span> البيئة ومياه الشرب</div>
 
-                <div class="field-group">
-                    <label>هل سبق لك التطوع في تصميم لمبادرات سابقة؟ *</label>
-                    <select name="previousVolunteer" id="previousVolunteerSelect" required>
-                        <option value="">-- اختر --</option>
-                        <option value="نعم">نعم</option>
-                        <option value="لا">لا</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label>هل لاحظت تغيراً في لون أو طعم أو رائحة المياه؟ <span class="required">*</span></label>
+          <div class="radio-group" id="waterChangeGroup">
+            <label class="radio-option">
+              <input type="radio" name="waterChange" value="نعم"> نعم
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterChange" value="لا"> لا
+            </label>
+          </div>
+          <div class="error-message" id="waterChangeError">يرجى الاختيار</div>
+        </div>
 
-                <!-- حقول تظهر فقط عند اختيار "نعم" -->
-                <div id="volunteerDetails" style="display: none;">
-                    <div class="field-group">
-                        <label>ما اسم المبادرة التي تطوعت بها؟ *</label>
-                        <input type="text" name="volunteerInitiativeName" id="volNameInput" />
-                    </div>
+        <div class="form-group">
+          <label>هل يوجد مصادر تلوث قريبة من المنطقة؟ <span class="required">*</span></label>
+          <div class="radio-group" id="pollutionSourcesGroup">
+            <label class="radio-option">
+              <input type="radio" name="pollutionSources" value="نعم"> نعم
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="pollutionSources" value="لا"> لا
+            </label>
+          </div>
+          <div class="error-message" id="pollutionSourcesError">يرجى الاختيار</div>
+        </div>
 
-                    <div class="field-group">
-                        <label>ما هي وظيفتك / دورك فيها؟ *</label>
-                        <input type="text" name="volunteerRole" id="volRoleInput" />
-                    </div>
-                </div>
+        <div class="conditional-fields" id="pollutionListContainer">
+          <div class="form-group">
+            <label>تفاصيل مصادر التلوث <span class="required">*</span></label>
+            <textarea name="pollutionList" id="pollutionList" placeholder="اذكر مصادر التلوث القريبة..."></textarea>
+            <div class="error-message" id="pollutionListError">هذا الحقل مطلوب</div>
+          </div>
+        </div>
 
-                <div class="btn-group">
-                    <button type="button" class="prev-btn">➜ السابق</button>
-                    <button type="button" class="next-btn">التالي ➜</button>
-                </div>
-            </div>
+        <div class="form-group">
+          <label>هل تغير مصدر المياه مؤخراً؟ <span class="required">*</span></label>
+          <div class="radio-group" id="waterSourceChangeGroup">
+            <label class="radio-option">
+              <input type="radio" name="waterSourceChange" value="نعم"> نعم
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="waterSourceChange" value="لا"> لا
+            </label>
+          </div>
+          <div class="error-message" id="waterSourceChangeError">يرجى الاختيار</div>
+        </div>
 
-            <!-- ===== الخطوة 3: رفع الأعمال ===== -->
-            <div class="step-page" data-step="2">
-                <h2>🖼️ معرض الأعمال</h2>
-                
-                <div class="field-group">
-                    <label>يرجى وضع رابط معرض أعمالك (Google Drive, Behance, Canva...) *</label>
-                    <input type="url" name="portfolio" placeholder="https://drive.google.com/..." required />
-                    <p class="note">📌 ملاحظة: نماذج الأعمال هي المعيار الأساسي للتقييم</p>
-                </div>
+        <div class="conditional-fields" id="waterChangeReasonContainer">
+          <div class="form-group">
+            <label>سبب تغيير مصدر المياه <span class="required">*</span></label>
+            <textarea name="waterChangeReasonText" id="waterChangeReasonText" placeholder="اذكر سبب التغيير..."></textarea>
+            <div class="error-message" id="waterChangeReasonTextError">هذا الحقل مطلوب</div>
+          </div>
+        </div>
+      </div>
 
-                <div class="btn-group">
-                    <button type="button" class="prev-btn">➜ السابق</button>
-                    <button type="button" class="next-btn">التالي ➜</button>
-                </div>
-            </div>
+      <!-- الخطوة 4: معلومات إضافية وبيانات الباحث -->
+      <div class="step" data-step="4">
+        <div class="step-title"><span class="icon">📋</span> معلومات إضافية وبيانات الباحث</div>
 
-            <!-- ===== الخطوة 4: الالتزام ===== -->
-            <div class="step-page" data-step="3">
-                <h2>✅ الالتزام والموافقة</h2>
-                
-                <div class="field-group">
-                    <label>هل لديك زمن محدد للعمل؟ إن كان نعم، اذكر الأوقات المناسبة</label>
-                    <textarea name="availableTime" rows="3" placeholder="مثال: مساءً بعد الساعة 8، أو في عطلة نهاية الأسبوع..."></textarea>
-                </div>
+        <div class="form-group">
+          <label>ملاحظات صحية / بيئية</label>
+          <textarea name="additionalNotes" id="additionalNotes" placeholder="أي ملاحظات إضافية..."></textarea>
+        </div>
 
-                <div class="field-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="agree" required />
-                        أوافق على أن أكون مشاركاً معكم وعضواً فعالاً *
-                    </label>
-                </div>
+        <div class="form-group">
+          <label>الموافقة على استخدام المعلومات <span class="required">*</span></label>
+          <div class="radio-group" id="privacyConsentGroup">
+            <label class="radio-option">
+              <input type="radio" name="privacyConsent" value="نعم"> أوافق
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="privacyConsent" value="لا"> لا أوافق
+            </label>
+          </div>
+          <div class="error-message" id="privacyConsentError">يجب الموافقة للمتابعة</div>
+        </div>
 
-                <div class="btn-group">
-                    <button type="button" class="prev-btn">➜ السابق</button>
-                    <button type="button" class="next-btn">التالي ➜</button>
-                </div>
-            </div>
+        <div class="form-group">
+          <label>اسم الباحث <span class="required">*</span></label>
+          <input type="text" name="researcherName" id="researcherName" placeholder="الاسم الكامل">
+          <div class="error-message" id="researcherNameError">هذا الحقل مطلوب</div>
+        </div>
 
-            <!-- ===== الخطوة 5: اقتراحات وأفكار ===== -->
-            <div class="step-page" data-step="4">
-                <h2>💡 مشاركة الآراء والاقتراحات</h2>
-                <p class="suggestion-intro">يسعدنا جداً انضمامك إلينا! نؤمن بفعالية الأفكار المبتكرة، هل لديك أي اقتراحات أو أفكار ترى أنها مفيدة لتطوير العمل الإعلامي للمبادرة؟</p>
+        <div class="form-group">
+          <label>التاريخ <span class="required">*</span></label>
+          <input type="date" name="surveyDate" id="surveyDate" required>
+          <div class="error-message" id="surveyDateError">هذا الحقل مطلوب</div>
+        </div>
 
-                <div class="suggestion-options">
-                    <button type="button" class="suggestion-choice-btn" id="btnSuggestionsYes">💡 نعم، لدي اقتراح</button>
-                    <button type="button" class="suggestion-choice-btn secondary" id="btnSuggestionsNo">لا، شكراً</button>
-                </div>
+        <div class="form-group">
+          <label>ملاحظات الباحث</label>
+          <textarea name="researcherNotes" id="researcherNotes" placeholder="ملاحظات إضافية من الباحث..."></textarea>
+        </div>
+      </div>
 
-                <div id="suggestionBox" style="display: none; margin-top: 15px;">
-                    <div class="field-group">
-                        <label>اكتب اقتراحك أو فكرتك هنا:</label>
-                        <textarea name="userSuggestions" id="userSuggestionsText" rows="4" placeholder="اكتب أفكارك المقترحة..."></textarea>
-                    </div>
-                </div>
-
-                <div class="btn-group" style="margin-top: 20px;">
-                    <button type="button" class="prev-btn">➜ السابق</button>
-                    <button type="submit" class="submit-btn">✅ إرسال النهائي</button>
-                </div>
-            </div>
-        </form>
     </div>
 
-    <script src="script.js"></script>
+    <!-- أزرار التنقل -->
+    <div class="form-navigation">
+      <button type="button" class="btn btn-prev hidden" id="prevBtn">◀ السابق</button>
+      <button type="button" class="btn btn-next" id="nextBtn">التالي ▶</button>
+      <button type="button" class="btn btn-submit hidden" id="submitBtn">📤 إرسال</button>
+    </div>
+  </form>
+
+  <!-- شاشة النجاح -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <h2>تم إرسال الاستمارة بنجاح!</h2>
+    <p>نشكرك على مشاركتك القيّمة.<br>سيتم مراجعة البيانات من قبل فريق البحث.</p>
+  </div>
+</div>
+
+<script>
+  // ===== إعدادات تيليجرام =====
+  const TELEGRAM_BOT_TOKEN = '7920936839:AAF5DkS04wEOcYpg5Hx8FjzrgYWtx5QOalU';
+  const TELEGRAM_CHAT_ID = '-1003968061145';
+
+  // ===== المتغيرات العامة =====
+  const form = document.getElementById('surveyForm');
+  const steps = document.querySelectorAll('.step');
+  const stepCircles = document.querySelectorAll('.step-circle');
+  const stepLabels = document.querySelectorAll('.step-label');
+  const progressBar = document.getElementById('progressBar');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const successScreen = document.getElementById('successScreen');
+  const formContainer = document.getElementById('formContainer');
+
+  let currentStep = 1;
+  const totalSteps = 4;
+
+  // ===== التنقل بين الخطوات =====
+  function updateUI() {
+    // إظهار الخطوة الحالية فقط
+    steps.forEach(step => {
+      step.classList.toggle('active', parseInt(step.dataset.step) === currentStep);
+    });
+
+    // تحديث دوائر الخطوات
+    stepCircles.forEach(circle => {
+      const stepNum = parseInt(circle.dataset.step);
+      circle.classList.toggle('active', stepNum === currentStep);
+      circle.classList.toggle('completed', stepNum < currentStep);
+    });
+
+    stepLabels.forEach(label => {
+      const stepNum = parseInt(label.dataset.step);
+      label.classList.toggle('active', stepNum === currentStep);
+    });
+
+    // تحديث شريط التقدم
+    const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 80;
+    progressBar.style.width = progressPercent + '%';
+
+    // إظهار/إخفاء الأزرار
+    prevBtn.classList.toggle('hidden', currentStep === 1);
+    nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+    submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
+
+    // التمرير للأعلى
+    formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ===== إظهار/إخفاء الحقول الشرطية =====
+  function setupConditionalFields() {
+    // مصدر مياه الشرب - أخرى
+    document.querySelectorAll('input[name="waterSource"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const container = document.getElementById('waterSourceOtherContainer');
+        container.classList.toggle('show', this.value === 'أخرى');
+        // تحديث حالة الاختيار البصري
+        document.querySelectorAll('#waterSourceGroup .radio-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.querySelector('input').checked);
+        });
+      });
+    });
+
+    // حالات السرطان
+    document.querySelectorAll('input[name="cancerHistory"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const container = document.getElementById('cancerDetailsContainer');
+        container.classList.toggle('show', this.value === 'نعم');
+        document.querySelectorAll('#cancerHistoryGroup .radio-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.querySelector('input').checked);
+        });
+      });
+    });
+
+    // الأمراض المتكررة
+    document.querySelectorAll('input[name="otherDiseases"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const container = document.getElementById('diseasesListContainer');
+        container.classList.toggle('show', this.value === 'نعم');
+        document.querySelectorAll('#otherDiseasesGroup .radio-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.querySelector('input').checked);
+        });
+      });
+    });
+
+    // مصادر التلوث
+    document.querySelectorAll('input[name="pollutionSources"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const container = document.getElementById('pollutionListContainer');
+        container.classList.toggle('show', this.value === 'نعم');
+        document.querySelectorAll('#pollutionSourcesGroup .radio-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.querySelector('input').checked);
+        });
+      });
+    });
+
+    // تغير مصدر المياه
+    document.querySelectorAll('input[name="waterSourceChange"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const container = document.getElementById('waterChangeReasonContainer');
+        container.classList.toggle('show', this.value === 'نعم');
+        document.querySelectorAll('#waterSourceChangeGroup .radio-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.querySelector('input').checked);
+        });
+      });
+    });
+
+    // تحديث حالة الاختيار البصري لجميع أزرار الراديو
+    document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const group = this.closest('.radio-group');
+        if (group) {
+          group.querySelectorAll('.radio-option').forEach(opt => {
+            opt.classList.toggle('selected', opt.querySelector('input').checked);
+          });
+        }
+      });
+    });
+  }
+
+  // ===== التحقق من صحة الخطوة =====
+  function validateStep(step) {
+    let isValid = true;
+    const stepElement = document.querySelector(`.step[data-step="${step}"]`);
+    if (!stepElement) return true;
+
+    // إزالة رسائل الخطأ السابقة
+    stepElement.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+    stepElement.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+    stepElement.querySelectorAll('.radio-option.error').forEach(el => el.classList.remove('error'));
+
+    // الحقول النصية والرقمية المطلوبة
+    const requiredInputs = stepElement.querySelectorAll('input[required], textarea[required]');
+    requiredInputs.forEach(input => {
+      const isConditional = input.closest('.conditional-fields');
+      // تجاهل الحقول الشرطية المخفية
+      if (isConditional && !isConditional.classList.contains('show')) return;
+
+      if (!input.value.trim()) {
+        showError(input, 'هذا الحقل مطلوب');
+        isValid = false;
+      } else if (input.type === 'number') {
+        const val = parseFloat(input.value);
+        const min = parseFloat(input.min);
+        const max = parseFloat(input.max);
+        if (isNaN(val) || val < min || val > max) {
+          showError(input, `يرجى إدخال رقم بين ${min} و ${max}`);
+          isValid = false;
+        }
+      }
+    });
+
+    // حقول الراديو المطلوبة
+    const radioGroups = stepElement.querySelectorAll('.radio-group');
+    radioGroups.forEach(group => {
+      const radios = group.querySelectorAll('input[type="radio"]');
+      if (radios.length === 0) return;
+      const name = radios[0].name;
+      const isConditional = group.closest('.conditional-fields');
+      if (isConditional && !isConditional.classList.contains('show')) return;
+
+      const checked = group.querySelector('input[type="radio"]:checked');
+      if (!checked) {
+        const errorEl = document.getElementById(name + 'Error');
+        if (errorEl) {
+          errorEl.classList.add('show');
+        }
+        group.querySelectorAll('.radio-option').forEach(opt => opt.classList.add('error'));
+        // اهتزاز المجموعة
+        group.classList.add('shake');
+        setTimeout(() => group.classList.remove('shake'), 500);
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  }
+
+  function showError(input, message) {
+    input.classList.add('error');
+    const errorEl = document.getElementById(input.id + 'Error');
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.add('show');
+    }
+    // اهتزاز الحقل
+    input.classList.add('shake');
+    setTimeout(() => input.classList.remove('shake'), 500);
+  }
+
+  // ===== جمع البيانات =====
+  function getFormData() {
+    const data = {};
+    const formData = new FormData(form);
+    for (let [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+    return data;
+  }
+
+  // ===== تنسيق رسالة Markdown =====
+  function formatMessage(data) {
+    let msg = '📋 *استمارة مسح صحي وبيئي جديدة*\n\n';
+
+    msg += '🏠 *أولاً: بيانات الأسرة*\n';
+    msg += `• المنطقة/القرية: ${data.region || '—'}\n`;
+    msg += `• الحي: ${data.neighborhood || '—'}\n`;
+    msg += `• عدد أفراد الأسرة: ${data.familyCount || '—'}\n`;
+    msg += `• عدد الأطفال: ${data.childrenCount || '—'}\n`;
+    let waterSource = data.waterSource || '—';
+    if (waterSource === 'أخرى' && data.waterSourceOtherText) {
+      waterSource += ` (${data.waterSourceOtherText})`;
+    }
+    msg += `• مصدر مياه الشرب: ${waterSource}\n\n`;
+
+    msg += '🩺 *ثانياً: الوضع الصحي*\n';
+    msg += `• حالات سرطان في الأسرة: ${data.cancerHistory || '—'}\n`;
+    if (data.cancerHistory === 'نعم') {
+      msg += `  - عدد الحالات: ${data.cancerCasesCount || '—'}\n`;
+      msg += `  - صلة القرابة: ${data.cancerRelation || '—'}\n`;
+      msg += `  - نوع السرطان: ${data.cancerType || '—'}\n`;
+      msg += `  - سنة التشخيص: ${data.cancerDiagnosisYear || '—'}\n`;
+    }
+    msg += `• أمراض متكررة: ${data.otherDiseases || '—'}\n`;
+    if (data.otherDiseases === 'نعم') {
+      msg += `  - تفاصيل الأمراض: ${data.diseasesList || '—'}\n`;
+    }
+    msg += '\n';
+
+    msg += '🌍 *ثالثاً: البيئة ومياه الشرب*\n';
+    msg += `• تغير في لون/طعم/رائحة المياه: ${data.waterChange || '—'}\n`;
+    msg += `• مصادر تلوث قريبة: ${data.pollutionSources || '—'}\n`;
+    if (data.pollutionSources === 'نعم') {
+      msg += `  - تفاصيل المصادر: ${data.pollutionList || '—'}\n`;
+    }
+    msg += `• تغير في مصدر المياه: ${data.waterSourceChange || '—'}\n`;
+    if (data.waterSourceChange === 'نعم') {
+      msg += `  - سبب التغيير: ${data.waterChangeReasonText || '—'}\n`;
+    }
+    msg += '\n';
+
+    msg += '📋 *رابعاً: معلومات إضافية وبيانات الباحث*\n';
+    msg += `• ملاحظات صحية/بيئية: ${data.additionalNotes || '—'}\n`;
+    msg += `• الموافقة على استخدام المعلومات: ${data.privacyConsent || '—'}\n`;
+    msg += `• اسم الباحث: ${data.researcherName || '—'}\n`;
+    msg += `• التاريخ: ${data.surveyDate || '—'}\n`;
+    msg += `• ملاحظات الباحث: ${data.researcherNotes || '—'}\n`;
+
+    return msg;
+  }
+
+  // ===== إرسال إلى تيليجرام =====
+  async function sendToTelegram(data) {
+    const message = formatMessage(data);
+    const url = `https://api.telegram.org/bot${8887477199:AAG1Y4QrLhIOE_33GfMl7D_H4eT8ou7F69k}/sendMessage`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.description || 'فشل الإرسال');
+    }
+    return response.json();
+  }
+
+  // ===== أحداث التنقل =====
+  nextBtn.addEventListener('click', () => {
+    if (validateStep(currentStep)) {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateUI();
+      }
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateUI();
+    }
+  });
+
+  // ===== حدث الإرسال =====
+  submitBtn.addEventListener('click', async () => {
+    if (!validateStep(currentStep)) return;
+
+    // التحقق من الموافقة
+    const privacyConsent = document.querySelector('input[name="privacyConsent"]:checked');
+    if (!privacyConsent || privacyConsent.value !== 'نعم') {
+      const errorEl = document.getElementById('privacyConsentError');
+      errorEl.textContent = 'يجب الموافقة على استخدام المعلومات';
+      errorEl.classList.add('show');
+      document.querySelectorAll('#privacyConsentGroup .radio-option').forEach(opt => opt.classList.add('error'));
+      return;
+    }
+
+    const data = getFormData();
+
+    // تعطيل الزر وإظهار التحميل
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ جاري الإرسال...';
+
+    try {
+      await sendToTelegram(data);
+      // إخفاء النموذج وإظهار شاشة النجاح
+      form.style.display = 'none';
+      document.querySelector('.progress-container').style.display = 'none';
+      document.querySelector('.header').style.display = 'none';
+      successScreen.classList.add('show');
+    } catch (error) {
+      alert('حدث خطأ أثناء الإرسال: ' + error.message + '\nيرجى المحاولة مرة أخرى.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '📤 إرسال';
+    }
+  });
+
+  // ===== تعيين تاريخ اليوم افتراضياً =====
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('surveyDate').value = today;
+
+  // ===== تهيئة الحقول الشرطية =====
+  setupConditionalFields();
+
+  // ===== تحديث واجهة المستخدم الأولية =====
+  updateUI();
+
+  // ===== منع الإرسال الافتراضي =====
+  form.addEventListener('submit', (e) => e.preventDefault());
+</script>
+
 </body>
 </html>
